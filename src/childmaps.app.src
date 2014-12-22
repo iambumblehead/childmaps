@@ -1,0 +1,10 @@
+{application, childmaps,
+ [
+  {description, "childmaps:to_list to get map with child maps as list"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {applications, [kernel,
+                  stdlib,
+                  asn1]},
+  {env, []}
+ ]}.
