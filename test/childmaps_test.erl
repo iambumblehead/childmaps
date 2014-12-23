@@ -20,3 +20,18 @@ is_childmap_list_test() ->
                     }
                 }),
     ?assert(length(maps:get(<<"prop1">>, NEWMAP)) =:= 2).
+
+is_childmap_list2_test() ->
+    NEWMAP = childmaps:to_list(
+               #{
+                 <<"prop0">> => 1,
+                 <<"prop1">> => #{
+                   <<"prop1mapprop1">> => <<"prop1mapval1">>,
+                   <<"prop1mapprop2">> => <<"prop1mapval2">>
+                  },
+                 <<"prop2">> => #{
+                     <<"prop2mapprop1">> => <<"prop2mapval1">>
+                    },
+                 <<"prop3">> => null
+                }),
+    ?assert(length(maps:get(<<"prop1">>, NEWMAP)) =:= 2).
