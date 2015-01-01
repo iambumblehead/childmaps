@@ -4,14 +4,24 @@ childmaps
 
 ### OVERVIEW:
 
-`childmaps` is a sequential erlang module that returns a new map created from an existing map with named properties converted from map to list.
+`childmaps` is a sequential erlang module to convert maps to lists. It will return a list from a map or list. 'child' map values within the data are converted to lists as well.
 
 ```erlang
-Map = #{<<"propval">> => #{<<"prop">> => <<"val">>}}.
-childmaps:to_list([<<"propval">>], Map). %% #{<<"propval">> => [{<<"prop">>,<<"val">>}]}
+[{<<"nestedmap">>,
+  [[{<<"prop0">>,<<"val0">>},
+    {<<"prop1">>,
+     [{<<"prop1mapprop1">>,<<"prop1mapval1">>},
+      {<<"prop1mapprop2">>,
+       <<"prop1mapval2">>}]}]]}] =
+childmaps:to_list(
+  #{<<"nestedmap">> => 
+        [#{<<"prop0">> => <<"val0">>,
+           <<"prop1">> => #{
+               <<"prop1mapprop1">> => <<"prop1mapval1">>,
+               <<"prop1mapprop2">> => <<"prop1mapval2">>}}]}).
 ```
 
-It is not very sophisticated. `maps:to_list/2`. does not convert child map values to the list type. `childmaps:to_list/2` was made for an application which needed this functionality.
+BIF `maps:to_list/2`. does not convert child map values to the list type. `childmaps:to_list/1` converts any map found in the data to a list.
 
 [0]: http://www.bumblehead.com "bumblehead"
 [1]: http://www.erlang.org/doc/man/dialyzer.html "dialyzer"
@@ -46,7 +56,7 @@ It is not very sophisticated. `maps:to_list/2`. does not convert child map value
 
 (The MIT License)
 
-Copyright (c) 2014 [Bumblehead][0] <chris@bumblehead.com>
+Copyright (c) 2014,2015 [Bumblehead][0] <chris@bumblehead.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
